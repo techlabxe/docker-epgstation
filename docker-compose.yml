@@ -11,7 +11,7 @@ services:
             MYSQL_DATABASE: epgstation
             TZ: "Asia/Tokyo"
         command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --performance-schema=false --expire_logs_days=1
-#        restart: always
+        restart: always
         logging:
             options:
                 max-size: "10m"
@@ -37,12 +37,12 @@ services:
         depends_on:
             - mysql
         ports:
-            - "18888:8888"
-            - "18889:8889"
+            - "8888:8888"
+            - "8889:8889"
         user: "1000:1000"
 #         devices:
 #             - /dev/dri:/dev/dri
-#        restart: always
+        restart: always
 
 volumes:
     epg-mysql-db:
