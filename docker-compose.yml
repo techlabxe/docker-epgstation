@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+    mysql:
+        image: mariadb:10.4
+        volumes:
+            - epg-mysql-db:/var/lib/mysql
+        environment:
+            MYSQL_USER: epgstation
+            MYSQL_PASSWORD: epgstation
+            MYSQL_ROOT_PASSWORD: epgstation
+            MYSQL_DATABASE: epgstation
+            TZ: "Asia/Tokyo"
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --performance-schema=false --expire_logs_days=1
+#        restart: always
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "3"
+
+    epgstation:
+        build:
+            context: "./docker"
+            dockerfile: "Dockerfile"
+        volumes:
+            - ./config:/app/config
+            - ./data:/app/data
+            - ./thumbnail:/app/thumbnail
+            - ./logs:/app/logs
+            - ./recorded:/app/recorded
+            - ./join_logo_scp_trial/JL:/join_logo_scp_trial/JL
+            - ./join_logo_scp_trial/logo:/join_logo_scp_trial/logo
+            - ./join_logo_scp_trial/result:/join_logo_scp_trial/result
+            - ./join_logo_scp_trial/setting:/join_logo_scp_trial/setting
+            - ./join_logo_scp_trial/src:/join_logo_scp_trial/src
+        environment:
+            TZ: "Asia/Tokyo"
+        depends_on:
+            - mysql
+        ports:
+            - "18888:8888"
+            - "18889:8889"
+        user: "1000:1000"
+#         devices:
+#             - /dev/dri:/dev/dri
+#        restart: always
+
+volumes:
+    epg-mysql-db:
+        driver: local
+
