@@ -687,6 +687,7 @@ RUN cd /app && \
   npm install async && \
   npm run all-install && \
   npm run build
+ENV PATH=$PATH:/join_logo_scp_trial/bin
 
 WORKDIR /app
 ENTRYPOINT ["npm"]
