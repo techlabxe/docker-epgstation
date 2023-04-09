@@ -136,7 +136,7 @@ RUN \
   DIR=/tmp/x264 && \
   mkdir -p ${DIR} && \
   cd ${DIR} && \
-  curl -sL https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-${X264_VERSION}.tar.bz2 | \
+  curl -sLk https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-${X264_VERSION}.tar.bz2 | \
   tar -jx --strip-components=1 && \
   ./configure --prefix="${PREFIX}" --enable-shared --enable-pic && \
   make && \
@@ -147,7 +147,7 @@ RUN \
   DIR=/tmp/x265 && \
   mkdir -p ${DIR} && \
   cd ${DIR} && \
-  curl -sL https://download.videolan.org/pub/videolan/x265/x265_${X265_VERSION}.tar.gz  | \
+  curl -sLk https://download.videolan.org/pub/videolan/x265/x265_${X265_VERSION}.tar.gz  | \
   tar -zx && \
   cd x265_${X265_VERSION}/build/linux && \
   sed -i "/-DEXTRA_LIB/ s/$/ -DCMAKE_INSTALL_PREFIX=\${PREFIX}/" multilib.sh && \
@@ -448,7 +448,7 @@ RUN \
   DIR=/tmp/libbluray && \
   mkdir -p ${DIR} && \
   cd ${DIR} && \
-  curl -sLO https://download.videolan.org/pub/videolan/libbluray/${LIBBLURAY_VERSION}/libbluray-${LIBBLURAY_VERSION}.tar.bz2 && \
+  curl -sLOk https://download.videolan.org/pub/videolan/libbluray/${LIBBLURAY_VERSION}/libbluray-${LIBBLURAY_VERSION}.tar.bz2 && \
   echo ${LIBBLURAY_SHA256SUM} | sha256sum --check && \
   tar -jx --strip-components=1 -f libbluray-${LIBBLURAY_VERSION}.tar.bz2 && \
   ./configure --prefix="${PREFIX}" --disable-examples --disable-bdjava-jar --disable-static --enable-shared && \
